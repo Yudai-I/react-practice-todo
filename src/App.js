@@ -16,14 +16,21 @@ function App() {
     todoNameRef.current.value = null;
 
   };
+  const toggleTodo = (id) => {
+    const newTodos = [...todos];
+    const todo = newTodos.find((todo) => todo.id === id);
+    todo.completed = !todo.completed;
+    setTodos(newTodos);
+  };
+
 
   return (
     <>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
       <input type="text" ref={todoNameRef} />
       <button onClick={handleAddTodo}>タスクを追加</button>
       <button>完了したタスクの削除</button>
-      <div>残りのタスク:0</div>
+      <div>残りのタスク:{todos.filter((todo) => !todo.completed).length}</div>
     </>
   );
 }
